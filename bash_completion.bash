@@ -1,7 +1,6 @@
 function_exists()
 {
-	declare -F $1 > /dev/null
-	return $?
+    whence -w $1 | grep -q "function"
 }
 
 function_exists _get_comp_words_by_ref ||
@@ -12,7 +11,8 @@ _get_comp_words_by_ref ()
         exclude=$2;
         shift 2;
     fi;
-    __git_reassemble_comp_words_by_ref "$exclude";
+    # write a custom __git_reassemble_comp_words_by_ref function in zsh
+    # __git_reassemble_comp_words_by_ref "$exclude";
     cur_=${words_[cword_]};
     while [ $# -gt 0 ]; do
         case "$1" in
